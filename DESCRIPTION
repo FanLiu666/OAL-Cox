@@ -1,0 +1,16 @@
+Package: OALCox
+Title: Outcome-adaptive lasso for Cox proportional hazard model
+Version: 0.1.0
+Author: Fan Liu
+Maintainer: Fan Liu <fanliu24@m.fudan.edu.cn>
+Description: Using OAL-Cox model to select covariates and estimate casual effects in survival data. 
+License: What license is it under?
+Encoding: UTF-8
+LazyData: false
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    lqa,
+    survival
+Suggests: 
+    glmnet
