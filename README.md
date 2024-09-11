@@ -37,8 +37,4 @@ OAL_Cox(data = Data,
         lambda_vec = lambda_vec, 
         gamma_convergence_factor = gamma,
         tau = 1095)
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> 285162425cd38431b4991c11d22a2bf7558cc90e
