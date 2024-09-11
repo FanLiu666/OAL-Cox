@@ -8,7 +8,6 @@ library(viridis)
 library(openxlsx)
 library(OALCox)
 
-source('AKM_rmst.R')
 source('sim_data.R')
 source('AL-Cox.R')
 
@@ -79,7 +78,7 @@ RASCE_comparison <- function(rho, n, p, theta_tau_pairs, rep_num, lambda_vec, co
                          status = Data$status,
                          covariates = var.list,
                          lambda_vec = lambda_vec,
-                         gamma_convergence_factor = 5,
+                         gamma_convergence_factor = 10,
                          tau = tau)
             # RASCE for OAL-Cox model
             RASCE_OAL_Cox <- b[[1]]
@@ -204,9 +203,9 @@ compare_index <- data.frame(cencored_rate = c(rep(50,12), rep(100,12)),
                             evaluation_type = c(rep('RB', 6), rep('MSE', 6), rep('RB', 6), rep('MSE', 6)),
                             method = c(rep(model, 4)))
 
-rho_values <- c(0.2, 0.5)
+rho_values <- c(0, 0.2)
 theta_tau_pairs <- list(c(50, 30), c(100, 60))
-p <- c(100, 200)
+p <- c(50, 100, 200)
 n <- c(500, 1000)
 rep <- 500
 RASCE_comparison(rho = rho_values,

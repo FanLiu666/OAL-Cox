@@ -8,7 +8,6 @@ library(viridis)
 library(openxlsx)
 library(OALCox)
 
-source('AKM_rmst.R')
 source('sim_data.R')
 source('AL-Cox.R')
 
@@ -58,7 +57,7 @@ variable_select <- function(rho, n_p_pairs, theta_tau_pairs, lambda_vec, rep_num
                        status = Data$status,
                        covariates = var.list,
                        lambda_vec = lambda_vec,
-                       gamma_convergence_factor = 5,
+                       gamma_convergence_factor = 10,
                        tau = tau)
           coeff_OAL_Cox <- b[[3]]
           covar_select_OAL_Cox[i,] <- t(coeff_OAL_Cox)
@@ -77,21 +76,21 @@ variable_select <- function(rho, n_p_pairs, theta_tau_pairs, lambda_vec, rep_num
 
         # calculate the variable-seletion proportion of OAL-Cox
         c1 <- apply(covar_select_OAL_Cox, 2, sum) / rep_num
-        var_select <- rbind(var_select, data.frame(Proportion = c1,
-                                                   index = c(1:p),
-                                                   Group = rep("OAL-Cox", p)))
+        var_select <- rbind(var_select, data.frame(Proportion = c1[1:20],
+                                                   index = c(1:20),
+                                                   Group = rep("OAL-Cox", 20)))
 
         # calculate the variable-seletion proportion of AL-Cox
         c2 <- apply(covar_select_AL_Cox, 2, sum) / rep_num
-        var_select <- rbind(var_select, data.frame(Proportion = c2,
-                                                   index = c(1:p),
-                                                   Group = rep("AL-Cox", p)))
+        var_select <- rbind(var_select, data.frame(Proportion = c2[1:20],
+                                                   index = c(1:20),
+                                                   Group = rep("AL-Cox", 20)))
 
         # calculate the variable-seletion proportion of reference method
         c3 <- c(rep(1,4), rep(0, p-4))
-        var_select <- rbind(var_select, data.frame(Proportion = c3,
-                                                   index = c(1:p),
-                                                   Group = rep("Reference", p)))
+        var_select <- rbind(var_select, data.frame(Proportion = c3[1:20],
+                                                   index = c(1:20),
+                                                   Group = rep("Reference", 20)))
 
         # plot the variable-seletion proportion of different method
         var_select$Group <- factor(var_select$Group, levels = c("OAL-Cox", "AL-Cox", "Reference"))
@@ -107,7 +106,7 @@ variable_select <- function(rho, n_p_pairs, theta_tau_pairs, lambda_vec, rep_num
                 legend.position = c(1, 1),
                 legend.justification = c(1, 1),
                 legend.box.background = element_rect(color="black"))+
-          scale_x_continuous(limits = c(0,p), breaks = seq(0, p, 5))
+          scale_x_continuous(limits = c(0,20), breaks = seq(0, 20, 5))
 
         file_name <- paste("~/variable_select_1/", "1_",
                            n, "_",
@@ -122,8 +121,8 @@ variable_select <- function(rho, n_p_pairs, theta_tau_pairs, lambda_vec, rep_num
 
 # simulate
 lambda_vec <- c(-10,-5,-2,-1,-0.75,-0.5,-0.25, 0.25, 0.49)
-rho_values <- c(0.2, 0.5)
-n_p_pairs <- list(c(500, 20), c(1000, 20))
+rho_values <- c(0, 0.2)
+n_p_pairs <- list(c(500, 50), c(1000, 50))
 theta_tau_pairs <- list(c(50, 30), c(100, 60))
 rep_num <- 500
 variable_select(rho = rho_values,
